@@ -1,5 +1,5 @@
 Package: smap
-Title: smap: Sampling Points World Map Visualization Using Robinson
+Title: Sampling Points World Map Visualization Using Robinson
         Projection in R
 Version: 0.1.0
 Authors@R: 
