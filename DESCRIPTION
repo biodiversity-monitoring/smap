@@ -1,0 +1,16 @@
+Package: smap
+Title: smap: Sampling Points World Map Visualization Using Robinson
+        Projection in R
+Version: 0.1.0
+Authors@R: 
+    person("Y", "H", , "hy18278380128@163.com", role = c("aut", "cre"))
+Description: Provides tools for efficiently creating and customizing world maps with the Robinson projection. The smap package simplifies the process of generating aesthetically pleasing and geographically accurate maps for presentations and analyses. It leverages the 'sf' and 'ggplot2' packages for spatial and graphical functionality, offering an accessible interface for both beginners and experienced users in spatial analysis. Whether your focus is on global environmental patterns, international data visualization, or educational illustrations, smap serves as a versatile toolkit for mapping our world.
+License: GPL-3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Depends: R (>= 4.0), sf, ggplot2, rnaturalearth, ggrepel
+NeedsCompilation: no
+Packaged: 2024-05-03 03:45:07 UTC; Administrator
+Author: Y H [aut, cre]
+Maintainer: Y H <hy18278380128@163.com>
