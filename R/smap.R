@@ -150,7 +150,7 @@ plot_map <- function(draw_countries = FALSE, draw_coastline = TRUE, fill_color =
 #' p <- plot_map(fill_color = "gray", draw_countries = FALSE, draw_coastline = FALSE)
 #'
 #' # Add the generated sampling points to the map
-#' plot_with_points <- plot_sampling_points(p, sampling_points)
+#' plot_sampling_points(p, sampling_points)
 #' plot_with_points
 #' @export
 #'
@@ -170,7 +170,8 @@ plot_sampling_points <- function(p, sampling_points, projection = "+proj=robin")
                                 nudge_y = 0.5,
                                 box.padding = 0.35,
                                 point.padding = 0.3,
-                                segment.color = 'black') +
+                                segment.color = 'black',
+                                min.segment.length = 0.01) +
       ggplot2::theme(axis.title.x = ggplot2::element_blank(), axis.title.y = ggplot2::element_blank(),
                      axis.text.x = ggplot2::element_blank(), axis.text.y = ggplot2::element_blank(),
                      axis.ticks = ggplot2::element_blank())
@@ -227,8 +228,7 @@ plot_sampling_points <- function(p, sampling_points, projection = "+proj=robin")
 #' )
 #'
 #' # Create and display the biomes map, without country borders and with coastline
-#' p <- plot_biomes_map(biomes, biome_colors, draw_countries = FALSE, draw_coastline = TRUE, projection = "+proj=robin")
-#' print(p)
+#' plot_biomes_map(biomes, biome_colors, draw_countries = FALSE, draw_coastline = TRUE, projection = "+proj=robin")
 #'
 #' @export
 plot_biomes_map <- function(biomes, biome_colors, draw_countries = FALSE, draw_coastline = TRUE, projection = "+proj=robin") {

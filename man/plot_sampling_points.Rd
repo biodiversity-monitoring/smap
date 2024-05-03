@@ -38,6 +38,6 @@ sampling_points <- data.frame(site = site, x = x, y = y)
 p <- plot_map(fill_color = "gray", draw_countries = FALSE, draw_coastline = FALSE)
 
 # Add the generated sampling points to the map
-plot_with_points <- plot_sampling_points(p, sampling_points)
+plot_sampling_points(p, sampling_points)
 plot_with_points
 }

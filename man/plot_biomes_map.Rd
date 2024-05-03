@@ -63,7 +63,6 @@ biome_colors <- c(
 )
 
 # Create and display the biomes map, without country borders and with coastline
-p <- plot_biomes_map(biomes, biome_colors, draw_countries = FALSE, draw_coastline = TRUE, projection = "+proj=robin")
-print(p)
+plot_biomes_map(biomes, biome_colors, draw_countries = FALSE, draw_coastline = TRUE, projection = "+proj=robin")
 
 }
