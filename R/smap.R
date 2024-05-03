@@ -204,7 +204,7 @@ plot_sampling_points <- function(p, sampling_points, projection = "+proj=robin")
 #'         using `print()` or further customized.
 #'
 #' @examples
-#' biomes data can be downloaded from https://ecoregions.appspot.com/
+#' # biomes data can be downloaded from https://ecoregions.appspot.com/
 #' library(sf)
 #' biomes <- st_read("Ecoregions2017.shp")
 #'
@@ -248,6 +248,10 @@ plot_biomes_map <- function(biomes, biome_colors, draw_countries = FALSE, draw_c
     coastline_transformed <- sf::st_transform(coastline, crs = projection)
     p <- p + ggplot2::geom_sf(data = coastline_transformed, color = "black", fill = NA)
   }
+
+  boundary_sf <- generate_boundary()
+  boundary_transformed <- sf::st_transform(boundary_sf, crs = projection)
+  p <- p + ggplot2::geom_sf(data = boundary_transformed, fill = NA, color = "black", size = 0.5)
 
   p <- p + ggplot2::scale_fill_manual(values = biome_colors, name = "Biome")
 

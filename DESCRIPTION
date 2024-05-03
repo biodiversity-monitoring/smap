@@ -11,6 +11,6 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
 Depends: R (>= 4.0), sf, ggplot2, rnaturalearth, ggrepel
 NeedsCompilation: no
-Packaged: 2024-05-03 03:45:07 UTC; Administrator
+Packaged: 2024-05-03 04:29:02 UTC; Administrator
 Author: Y H [aut, cre]
 Maintainer: Y H <hy18278380128@163.com>

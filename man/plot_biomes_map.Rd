@@ -40,7 +40,7 @@ The biome data is expected to be loaded with \code{data("biomes")}, which should
 an 'sf' object including a column for biome names (\code{BIOME_NAME}).
 }
 \examples{
-biomes data can be downloaded from https://ecoregions.appspot.com/
+# biomes data can be downloaded from https://ecoregions.appspot.com/
 library(sf)
 biomes <- st_read("Ecoregions2017.shp")
 
