@@ -7,7 +7,6 @@
 plot_biomes_map(
   biomes,
   biome_colors,
-  draw_countries = FALSE,
   draw_coastline = TRUE,
   projection = "+proj=robin"
 )
@@ -18,9 +17,6 @@ plot_biomes_map(
 
 \item{biome_colors}{A named vector providing colors for each biome, where the names
 must correlate with the unique \code{BIOME_NAME}s in the \code{biomes} dataset.}
-
-\item{draw_countries}{Logical indicating if country borders should be overlaid on the map.
-Uses 'rnaturalearth'. Defaults to \code{FALSE}.}
 
 \item{draw_coastline}{Logical indicating if the global coastline should be drawn.
 Defaults to \code{TRUE}.}
@@ -63,6 +59,6 @@ biome_colors <- c(
 )
 
 # Create and display the biomes map, without country borders and with coastline
-plot_biomes_map(biomes, biome_colors, draw_countries = FALSE, draw_coastline = TRUE, projection = "+proj=robin")
+plot_biomes_map(biomes, biome_colors, draw_coastline = TRUE, projection = "+proj=robin")
 
 }

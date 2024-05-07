@@ -2,19 +2,15 @@
 % Please edit documentation in R/smap.R
 \name{plot_map}
 \alias{plot_map}
-\title{Plot Simple World Map}
+\title{Plot World Map}
 \usage{
 plot_map(
-  draw_countries = FALSE,
-  draw_coastline = TRUE,
+  draw_coastline = FALSE,
   fill_color = "#e0e0eb",
   projection = "+proj=robin"
 )
 }
 \arguments{
-\item{draw_countries}{Logical flag to indicate whether to draw country borders.
-Default is \code{FALSE}.}
-
 \item{draw_coastline}{Logical flag to indicate whether to draw the coastline.
 Default is \code{TRUE}.}
 
@@ -29,23 +25,17 @@ A \code{ggplot} object representing the world map that can be either further cus
 with 'ggplot2' syntax or displayed using the \code{print()} function.
 }
 \description{
-This function creates a simple, customizable world map. Options include toggling country
-borders, drawing coastlines, setting fill color, and choosing map projection. It relies
+This function creates a simple, customizable world map. Options include toggling
+drawing coastlines, setting fill color, and choosing map projection. It relies
 on 'ggplot2' for plotting, 'rnaturalearth' for geographic data, and 'sf' for spatial
 operations.
 }
 \examples{
 
 # Plot a simple world map with default settings:
-# No country borders and default coastline
 plot_map()
 
-# Plot a world map showing only country borders, without coastline
-plot_map(draw_countries = TRUE, draw_coastline = FALSE)
+# Plot a world map showing with coastline
+plot_map(draw_coastline = TRUE,fill_color = "#A6D96A")
 
-# Plot a world map showing only coastline, without country borders
-plot_map(draw_countries = FALSE, draw_coastline = TRUE)
-
-# Plot a basic world map with neither country borders nor coastline
-plot_map(draw_countries = FALSE, draw_coastline = FALSE)
 }

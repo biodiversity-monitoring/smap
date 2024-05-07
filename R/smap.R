@@ -51,15 +51,13 @@ generate_boundary <- function(n_points = 3000) {
 
 
 
-#' Plot Simple World Map
+#' Plot World Map
 #'
-#' This function creates a simple, customizable world map. Options include toggling country
-#' borders, drawing coastlines, setting fill color, and choosing map projection. It relies
+#' This function creates a simple, customizable world map. Options include toggling
+#' drawing coastlines, setting fill color, and choosing map projection. It relies
 #' on 'ggplot2' for plotting, 'rnaturalearth' for geographic data, and 'sf' for spatial
 #' operations.
 #'
-#' @param draw_countries Logical flag to indicate whether to draw country borders.
-#'                       Default is `FALSE`.
 #' @param draw_coastline Logical flag to indicate whether to draw the coastline.
 #'                       Default is `TRUE`.
 #' @param fill_color The hexadecimal code for the countries' fill color.
@@ -73,52 +71,31 @@ generate_boundary <- function(n_points = 3000) {
 #' @examples
 #'
 #' # Plot a simple world map with default settings:
-#' # No country borders and default coastline
 #' plot_map()
 #'
-#' # Plot a world map showing only country borders, without coastline
-#' plot_map(draw_countries = TRUE, draw_coastline = FALSE)
+#' # Plot a world map showing with coastline
+#' plot_map(draw_coastline = TRUE,fill_color = "#A6D96A")
 #'
-#' # Plot a world map showing only coastline, without country borders
-#' plot_map(draw_countries = FALSE, draw_coastline = TRUE)
-#'
-#' # Plot a basic world map with neither country borders nor coastline
-#' plot_map(draw_countries = FALSE, draw_coastline = FALSE)
 #' @export
 #'
 #' @importFrom sf st_transform
 #' @importFrom ggplot2 ggplot geom_sf theme_classic
 #' @importFrom rnaturalearth ne_countries ne_coastline
-plot_map <- function(draw_countries = FALSE, draw_coastline = TRUE, fill_color = "#e0e0eb", projection = "+proj=robin") {
-  # Base ggplot object setup
+plot_map <- function(draw_coastline = FALSE, fill_color = "#e0e0eb", projection = "+proj=robin") {
   p <- ggplot2::ggplot() + ggplot2::theme_classic()
-
-  # Fetch and transform country data
   countries <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
   countries_transformed <- sf::st_transform(countries, crs = projection)
-
-  # Determine border color based on the draw_countries flag
-  border_color <- if(draw_countries) "black" else NA
-
-  # Adding countries layer
-  p <- p + ggplot2::geom_sf(data = countries_transformed, fill = fill_color, color = border_color)
-
-  # Add coastline layer if requested
+  p <- p + ggplot2::geom_sf(data = countries_transformed, fill = fill_color, color = if(draw_coastline) NA else fill_color)
   if (draw_coastline) {
     coastline <- rnaturalearth::ne_coastline(scale = "medium", returnclass = "sf")
     coastline_transformed <- sf::st_transform(coastline, crs = projection)
     p <- p + ggplot2::geom_sf(data = coastline_transformed, color = "black", fill = NA)
   }
-
-  # Assuming generate_boundary() function is defined externally and returns an sf object
   boundary_sf <- generate_boundary()
   boundary_transformed <- sf::st_transform(boundary_sf, crs = projection)
   p <- p + ggplot2::geom_sf(data = boundary_transformed, fill = NA, color = "black", size = 0.5)
-
-  # Return the ggplot object
   return(p)
 }
-
 
 
 #' Plot Sampling Points on a Map
@@ -147,11 +124,10 @@ plot_map <- function(draw_countries = FALSE, draw_coastline = TRUE, fill_color =
 #' sampling_points <- data.frame(site = site, x = x, y = y)
 #'
 #' # Assuming `plot_map` is defined and creates a base map
-#' p <- plot_map(fill_color = "gray", draw_countries = FALSE, draw_coastline = FALSE)
+#' p <- plot_map(fill_color = "gray",  draw_coastline = FALSE)
 #'
 #' # Add the generated sampling points to the map
 #' plot_sampling_points(p, sampling_points)
-#' plot_with_points
 #' @export
 #'
 #' @importFrom sf st_as_sf st_transform
@@ -194,8 +170,6 @@ plot_sampling_points <- function(p, sampling_points, projection = "+proj=robin")
 #'               `BIOME_NAME` column which matches the keys in `biome_colors`.
 #' @param biome_colors A named vector providing colors for each biome, where the names
 #'                     must correlate with the unique `BIOME_NAME`s in the `biomes` dataset.
-#' @param draw_countries Logical indicating if country borders should be overlaid on the map.
-#'                       Uses 'rnaturalearth'. Defaults to `FALSE`.
 #' @param draw_coastline Logical indicating if the global coastline should be drawn.
 #'                       Defaults to `TRUE`.
 #' @param projection Map projection parameters in PROJ format.
@@ -228,27 +202,20 @@ plot_sampling_points <- function(p, sampling_points, projection = "+proj=robin")
 #' )
 #'
 #' # Create and display the biomes map, without country borders and with coastline
-#' plot_biomes_map(biomes, biome_colors, draw_countries = FALSE, draw_coastline = TRUE, projection = "+proj=robin")
+#' plot_biomes_map(biomes, biome_colors, draw_coastline = TRUE, projection = "+proj=robin")
 #'
 #' @export
-plot_biomes_map <- function(biomes, biome_colors, draw_countries = FALSE, draw_coastline = TRUE, projection = "+proj=robin") {
+plot_biomes_map <- function(biomes, biome_colors, draw_coastline = TRUE, projection = "+proj=robin") {
   valid_biomes <- biomes[biomes$BIOME_NAME != "N/A", ]
   valid_biomes_transformed <- sf::st_transform(valid_biomes, crs = projection)
   p <- ggplot2::ggplot() + ggplot2::theme_classic()
   p <- p + ggplot2::geom_sf(data = valid_biomes_transformed, aes(fill = BIOME_NAME), color = NA)
-
-  if (draw_countries) {
-    countries <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
-    countries_transformed <- sf::st_transform(countries, crs = projection)
-    p <- p + ggplot2::geom_sf(data = countries_transformed, fill = NA, color = "black")
-  }
 
   if (draw_coastline) {
     coastline <- rnaturalearth::ne_coastline(scale = "medium", returnclass = "sf")
     coastline_transformed <- sf::st_transform(coastline, crs = projection)
     p <- p + ggplot2::geom_sf(data = coastline_transformed, color = "black", fill = NA)
   }
-
   boundary_sf <- generate_boundary()
   boundary_transformed <- sf::st_transform(boundary_sf, crs = projection)
   p <- p + ggplot2::geom_sf(data = boundary_transformed, fill = NA, color = "black", size = 0.5)
